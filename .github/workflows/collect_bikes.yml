@@ -3,7 +3,7 @@ name: Collect Dublin Bikes
 on:
   schedule:
     # GitHub cron can be delayed or skipped.
-    - cron: "*/10 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:
