@@ -78,29 +78,9 @@ def run_once():
             write_log(entry)
             return entry
         try:
-    weather_response = get_json(
-        WEATHER_URL,
-        retries=3,
-        timeout=15
-    )
-
-    weather = weather_response.get("current")
-
-    if not weather:
-        raise ValueError("Weather API returned no current data")
-
-    logging.info(
-        "Weather fetched successfully: temperature=%s, humidity=%s",
-        weather.get("temperature_2m"),
-        weather.get("relative_humidity_2m")
-    )
-
-except (requests.RequestException, ValueError) as exc:
-    logging.error(
-        "Weather unavailable after retries: %s",
-        exc
-    )
-    weather = {}
+            weather = get_json(WEATHER_URL).get("current") or {}
+        except requests.RequestException:
+            weather = {}
         rows = []
         for s in status["data"]["stations"]:
             types = {t["vehicle_type_id"]: t["count"] for t in s.get("vehicle_types_available", [])}
